@@ -1,0 +1,48 @@
+{
+	"nodes": ["A", "B", "C", "D", "E", "F", "G"],
+	"edges": {
+		"A": [
+			{ "node": "B", "weight": 1.2 },
+			{ "node": "C", "weight": 2.5 }
+		],
+		"B": [
+			{ "node": "A", "weight": 1.2 },
+			{ "node": "C", "weight": 0.8 },
+			{ "node": "D", "weight": 3.1 }
+		],
+		"C": [
+			{ "node": "A", "weight": 2.5 },
+			{ "node": "B", "weight": 0.8 },
+			{ "node": "D", "weight": 1.7 },
+			{ "node": "E", "weight": 2.9 }
+		],
+		"D": [
+			{ "node": "B", "weight": 3.1 },
+			{ "node": "C", "weight": 1.7 },
+			{ "node": "F", "weight": 1.5 }
+		],
+		"E": [
+			{ "node": "C", "weight": 2.9 },
+			{ "node": "F", "weight": 0.6 },
+			{ "node": "G", "weight": 3.8 }
+		],
+		"F": [
+			{ "node": "D", "weight": 1.5 },
+			{ "node": "E", "weight": 0.6 },
+			{ "node": "G", "weight": 1.2 }
+		],
+		"G": [
+			{ "node": "E", "weight": 3.8 },
+			{ "node": "F", "weight": 1.2 }
+		]
+	},
+	"coordinates": {
+		"A": [41.0082, 28.9784],
+		"B": [41.0151, 28.9795],
+		"C": [41.0227, 28.9744],
+		"D": [41.0136, 28.9558],
+		"E": [41.0308, 28.9741],
+		"F": [41.0186, 28.9614],
+		"G": [41.0276, 28.9749]
+	}
+}

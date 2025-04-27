@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Smart Route Navigator</title>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+			integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+			crossorigin=""
+		/>
+		<link
+			rel="stylesheet"
+			href="style.css"
+		/>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Smart Route Navigator</h1>
+			<p>select start and end points</p>
+			<div id="info-panel">
+				<div id="selection-info">Select start and end points</div>
+				<div id="distance-info">Distance: -</div>
+				<div id="time-info">Estimated Time: -</div>
+				<div id="path-info">Path: -</div>
+				<div id="error-message"></div>
+				<button
+					id="clear-btn"
+					disabled
+				>
+					× Clear Selection
+				</button>
+			</div>
+			<div id="map"></div>
+		</div>
+
+		<script
+			src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+			integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+			crossorigin=""
+		></script>
+		<script src="dijkstra.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>

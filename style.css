@@ -1,0 +1,131 @@
+body {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #2e3944;
+	color: white;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+h1,
+p,
+#selection-info,
+#distance-info,
+#time-info,
+#path-info,
+#error-message {
+	color: white;
+}
+
+#map {
+	height: 500px;
+	width: 100%;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+	margin-bottom: 20px;
+}
+
+#info-panel {
+	background-color: #212a31;
+	padding: 15px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#selection-info {
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: #d3d9d4;
+}
+
+#distance-info,
+#time-info,
+#path-info {
+	margin: 5px 0;
+	font-size: 16px;
+}
+
+#error-message {
+	color: #e74c3c;
+	font-weight: bold;
+	margin: 10px 0;
+	min-height: 20px;
+}
+
+#clear-btn {
+	background-color: #124e66;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 8px 15px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	float: right;
+}
+
+#clear-btn:hover {
+	background-color: #1abc9c;
+	color: white;
+}
+
+#clear-btn:disabled {
+	background-color: #95a5a6;
+	cursor: not-allowed;
+}
+
+.node-marker {
+	background-color: #124e66;
+	color: white;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 20px;
+	font-weight: bold;
+	border: 2px solid white;
+	transition: transform 0.2s;
+}
+
+.node-marker:hover {
+	transform: scale(1.2);
+}
+
+.start-marker {
+	background-color: #2ecc71;
+	color: white;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 25px;
+	font-weight: bold;
+	border: 2px solid white;
+}
+
+.end-marker {
+	background-color: #e74c3c;
+	color: white;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 25px;
+	font-weight: bold;
+	border: 2px solid white;
+}
+
+.unreachable-marker {
+	background-color: #f39c12;
+	color: white;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 25px;
+	font-weight: bold;
+	border: 2px solid white;
+}
+
+.path-line {
+	color: #124e66;
+	stroke-width: 5;
+	opacity: 0.7;
+}
