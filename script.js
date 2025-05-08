@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 	// Initialize map centered on Istanbul
-	const map = L.map("map").setView([41.041, 29.0094], 12);
+	const map = L.map("map").setView([41.0251, 29.0248], 13);
 	L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 		attribution:
 			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
