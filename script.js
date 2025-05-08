@@ -13,6 +13,20 @@ document.addEventListener("DOMContentLoaded", function () {
 	const pathInfo = document.getElementById("path-info");
 	const errorMessage = document.getElementById("error-message");
 	const clearBtn = document.getElementById("clear-btn");
+	const loader = document.getElementById("loader");
+	const loaderContainer = document.getElementById("loader-container");
+
+	// Function to show the loader
+	function showLoader() {
+		loader.style.display = "block";
+		loaderContainer.style.display = "flex";
+	}
+
+	// Function to hide the loader
+	function hideLoader() {
+		loader.style.display = "none";
+		loaderContainer.style.display = "none";
+	}
 
 	// Function to get actual road path between coordinates (visual only)
 	async function getRoadPath(coordinates) {
@@ -44,6 +58,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	fetch("graph-data.json")
 		.then((response) => response.json())
 		.then(async (data) => {
+			showLoader(); // Show loader while initializing paths
+
 			const coordinates = data.coordinates;
 			const nodeNames = data.nodes;
 
@@ -90,6 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
 					});
 				}
 			}
+
+			hideLoader(); // Hide loader after initialization
 
 			// Path finding logic
 			let startNode = null;
@@ -263,5 +281,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			console.error("Error loading graph data:", error);
 			errorMessage.textContent =
 				"Error loading map data. Please check console for details.";
+			hideLoader(); // Hide loader in case of error
 		});
 });
