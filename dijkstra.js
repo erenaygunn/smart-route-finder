@@ -56,8 +56,8 @@ function dijkstra(graph, start, end) {
 
 			const path = buildPath(previous, end);
 
-			// Calculate time (assuming 5 km/h walking speed)
-			const time = (distances[end] / 5) * 60; // Convert to minutes
+			// Calculate time (assuming 50 km/h average speed)
+			const time = (distances[end] / 50) * 60; // Convert to minutes
 
 			return {
 				path,

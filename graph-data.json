@@ -2,47 +2,39 @@
 	"nodes": ["A", "B", "C", "D", "E", "F", "G"],
 	"edges": {
 		"A": [
-			{ "node": "B", "weight": 1.2 },
-			{ "node": "C", "weight": 2.5 }
+			{ "node": "B", "weight": 1.1 },
+			{ "node": "D", "weight": 2.0 }
 		],
 		"B": [
-			{ "node": "A", "weight": 1.2 },
-			{ "node": "C", "weight": 0.8 },
-			{ "node": "D", "weight": 3.1 }
+			{ "node": "A", "weight": 1.1 },
+			{ "node": "C", "weight": 1.0 }
 		],
 		"C": [
-			{ "node": "A", "weight": 2.5 },
-			{ "node": "B", "weight": 0.8 },
-			{ "node": "D", "weight": 1.7 },
-			{ "node": "E", "weight": 2.9 }
+			{ "node": "B", "weight": 1.0 },
+			{ "node": "D", "weight": 3.2 }
 		],
 		"D": [
-			{ "node": "B", "weight": 3.1 },
-			{ "node": "C", "weight": 1.7 },
-			{ "node": "F", "weight": 1.5 }
+			{ "node": "A", "weight": 2.0 },
+			{ "node": "C", "weight": 3.2 },
+			{ "node": "E", "weight": 2.4 }
 		],
 		"E": [
-			{ "node": "C", "weight": 2.9 },
-			{ "node": "F", "weight": 0.6 },
-			{ "node": "G", "weight": 3.8 }
+			{ "node": "D", "weight": 2.4 },
+			{ "node": "F", "weight": 3.1 }
 		],
 		"F": [
-			{ "node": "D", "weight": 1.5 },
-			{ "node": "E", "weight": 0.6 },
-			{ "node": "G", "weight": 1.2 }
+			{ "node": "E", "weight": 3.1 },
+			{ "node": "G", "weight": 1.9 }
 		],
-		"G": [
-			{ "node": "E", "weight": 3.8 },
-			{ "node": "F", "weight": 1.2 }
-		]
+		"G": [{ "node": "F", "weight": 1.9 }]
 	},
 	"coordinates": {
-		"A": [41.0082, 28.9784],
-		"B": [41.0151, 28.9795],
-		"C": [41.0227, 28.9744],
-		"D": [41.0136, 28.9558],
-		"E": [41.0308, 28.9741],
-		"F": [41.0186, 28.9614],
-		"G": [41.0276, 28.9749]
+		"A": [41.0369, 28.9863],
+		"B": [41.034, 28.9733],
+		"C": [41.0253, 28.9768],
+		"D": [41.041, 29.0094],
+		"E": [41.0623, 29.0081],
+		"F": [41.0853, 29.029],
+		"G": [41.1021, 29.0257]
 	}
 }

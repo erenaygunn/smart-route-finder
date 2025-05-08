@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 	// Initialize map centered on Istanbul
-	const map = L.map("map").setView([41.0082, 28.9784], 13);
+	const map = L.map("map").setView([41.041, 29.0094], 12);
 	L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 		attribution:
 			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -14,13 +14,41 @@ document.addEventListener("DOMContentLoaded", function () {
 	const errorMessage = document.getElementById("error-message");
 	const clearBtn = document.getElementById("clear-btn");
 
+	// Function to get actual road path between coordinates (visual only)
+	async function getRoadPath(coordinates) {
+		try {
+			const coordsString = coordinates
+				.map((coord) => `${coord[1]},${coord[0]}`)
+				.join(";");
+			const response = await fetch(
+				`https://router.project-osrm.org/route/v1/driving/${coordsString}?overview=full&geometries=geojson`
+			);
+			const data = await response.json();
+			if (
+				data.routes &&
+				data.routes[0] &&
+				data.routes[0].geometry &&
+				data.routes[0].geometry.coordinates
+			) {
+				console.log(data.routes);
+				return data.routes[0].geometry.coordinates.map((c) => [c[1], c[0]]);
+			}
+			return null;
+		} catch (error) {
+			console.error("Error fetching road path:", error);
+			return null;
+		}
+	}
+
 	// Load graph data
 	fetch("graph-data.json")
 		.then((response) => response.json())
-		.then((data) => {
-			const graph = data.edges;
+		.then(async (data) => {
 			const coordinates = data.coordinates;
 			const nodeNames = data.nodes;
+
+			// Create a new graph with manual weights
+			const graph = {};
 
 			// Plot nodes on the map
 			const nodeMarkers = {};
@@ -35,18 +63,32 @@ document.addEventListener("DOMContentLoaded", function () {
 				}).addTo(map);
 			});
 
-			// Draw edges (roads) between nodes
-			for (const node in graph) {
-				const edges = graph[node];
-				edges.forEach((edge) => {
+			// Process edges - draw real roads but use manual weights
+			for (const node in data.edges) {
+				graph[node] = [];
+				const edges = data.edges[node];
+
+				for (const edge of edges) {
 					const fromCoord = coordinates[node];
 					const toCoord = coordinates[edge.node];
-					L.polyline([fromCoord, toCoord], {
-						color: "#95a5a6",
-						weight: 2,
-						opacity: 0.7,
-					}).addTo(map);
-				});
+
+					// Draw actual road path (visual only)
+					const roadPath = await getRoadPath([fromCoord, toCoord]);
+					if (roadPath) {
+						L.polyline(roadPath, {
+							color: "#0320fc",
+							weight: 5,
+							opacity: 0.7,
+							className: "road-line",
+						}).addTo(map);
+					}
+
+					// Store the connection with manual weight
+					graph[node].push({
+						node: edge.node,
+						weight: edge.weight, // Using manual weight from JSON
+					});
+				}
 			}
 
 			// Path finding logic
@@ -60,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				updateUI();
 			});
 
-			map.on("click", function (e) {
+			map.on("click", async function (e) {
 				// Find the nearest node to the clicked location
 				let nearestNode = null;
 				let minDistance = Infinity;
@@ -96,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						})
 					);
 
-					// Calculate shortest path
+					// Calculate shortest path using manual weights
 					const result = dijkstra(graph, startNode, endNode);
 
 					if (result.error) {
@@ -110,20 +152,35 @@ document.addEventListener("DOMContentLoaded", function () {
 						);
 						errorMessage.textContent = result.error;
 					} else {
-						// Path found
-						const pathCoords = result.path.map((node) => coordinates[node]);
+						// Get coordinates for the path nodes
+						const waypoints = result.path.map((node) => coordinates[node]);
+
+						// Draw the actual road path for visualization
+						const roadPath = await getRoadPath(waypoints);
+
 						if (pathPolyline) {
 							map.removeLayer(pathPolyline);
 						}
-						pathPolyline = L.polyline(pathCoords, {
-							color: "#3498db",
-							weight: 5,
-							opacity: 0.7,
-							className: "path-line",
-						}).addTo(map);
 
-						// Zoom to fit the path
-						map.fitBounds(pathPolyline.getBounds());
+						if (roadPath) {
+							pathPolyline = L.polyline(roadPath, {
+								color: "#00ff26",
+								weight: 10,
+								opacity: 1,
+								className: "path-line",
+							}).addTo(map);
+							map.fitBounds(pathPolyline.getBounds());
+						} else {
+							// Fallback to straight lines if routing fails
+							const pathCoords = result.path.map((node) => coordinates[node]);
+							pathPolyline = L.polyline(pathCoords, {
+								color: "#00ff26",
+								weight: 10,
+								opacity: 1,
+								className: "path-line",
+							}).addTo(map);
+							map.fitBounds(pathPolyline.getBounds());
+						}
 					}
 				} else {
 					// Reset selection
@@ -189,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
 							2
 						)} km`;
 
-						// Format time as hours and minutes
+						// Format time based on manual weights
 						const hours = Math.floor(result.time / 60);
 						const minutes = Math.round(result.time % 60);
 						let timeString = "";
